@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "289246166024",
-    "project_id": "appdocbao-75d78",
-    "storage_bucket": "appdocbao-75d78.appspot.com"
+    "project_number": "653185741188",
+    "firebase_url": "https://docbao-b8138-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "docbao-b8138",
+    "storage_bucket": "docbao-b8138.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:289246166024:android:99887dafc1afb0bae0e5bd",
+        "mobilesdk_app_id": "1:653185741188:android:5c20b2092b17642c096dd1",
         "android_client_info": {
           "package_name": "com.example.appdocbao"
         }
@@ -15,7 +16,26 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAwdJ2D-d-lyH14LazpdOboIUG17OF3Ex8"
+          "current_key": "AIzaSyDoPT0tj01djuxtRzUoljArx1H-LHFXd5s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653185741188:android:ba60798e82db862d096dd1",
+        "android_client_info": {
+          "package_name": "com.example.appdocbao1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoPT0tj01djuxtRzUoljArx1H-LHFXd5s"
         }
       ],
       "services": {
