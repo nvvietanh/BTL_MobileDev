@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.appdocbao.BroadcastReceiver.Internet;
+import com.example.appdocbao.Fragment.NewsFragment;
 import com.example.appdocbao.Fragment.ProfileFragment;
 import com.example.appdocbao.Fragment.UserFragment;
 import com.example.appdocbao.R;
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             int itemId = item.getItemId();
             if (itemId == R.id.news) {
                 // Gọi giao diện danh sách tin tức
+                replaceFragement(new NewsFragment());
             } else if (itemId == R.id.gif) {
                 // Gọi fragment đổi thưởng
             } else if (itemId == R.id.trend) {
