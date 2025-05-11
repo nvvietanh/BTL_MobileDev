@@ -17,10 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.appdocbao.BroadcastReceiver.Internet;
-import com.example.appdocbao.Fragment.GifFragment;
-import com.example.appdocbao.Fragment.NewsFragment;
 import com.example.appdocbao.Fragment.ProfileFragment;
-import com.example.appdocbao.Fragment.TrendFragment;
 import com.example.appdocbao.Fragment.UserFragment;
 import com.example.appdocbao.R;
 import com.example.appdocbao.databinding.ActivityMainBinding;
@@ -31,6 +28,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -38,9 +38,16 @@ public class MainActivity extends AppCompatActivity {
     private Internet internetBroadcastReceiver;
     private boolean isReceiverRegistered = false;
 
+    static Map cloudinaryConfig = new HashMap();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // config Cloudinary
+        cloudinaryConfig.put("cloud_name", "ngvvanh261");
+        cloudinaryConfig.put("api_key","581333286277713");
+        cloudinaryConfig.put("api_secret","pY2f1rWksmZWfpEomvVhKbB5Sjo");
 
         // Kiểm tra trạng thái chế độ tối đã được lưu trong SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
@@ -57,15 +64,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         internetBroadcastReceiver = new Internet();
 
-        replaceFragement(new NewsFragment());
+        //
+
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.news) {
-                replaceFragement(new NewsFragment());
+                // Gọi giao diện danh sách tin tức
             } else if (itemId == R.id.gif) {
-                replaceFragement(new GifFragment());
+                // Gọi fragment đổi thưởng
             } else if (itemId == R.id.trend) {
-                replaceFragement(new TrendFragment());
+                // Gọi fragment tin tức được yêu thích
             } else if (itemId == R.id.profile) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
@@ -113,5 +121,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    public static Map getCloudinaryConfig() {
+        return cloudinaryConfig;
+    }
 
 }

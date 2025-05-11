@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appdocbao.Activity.LoginActivity;
-import com.example.appdocbao.Activity.NewspaperPostingActivity;
 import com.example.appdocbao.Activity.SignupActivity;
 import com.example.appdocbao.R;
 
