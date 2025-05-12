@@ -1,6 +1,5 @@
 package com.example.appdocbao.Activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -10,13 +9,13 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.appdocbao.BroadcastReceiver.Internet;
+import com.example.appdocbao.Fragment.GiftFragment;
 import com.example.appdocbao.Fragment.NewsFragment;
 import com.example.appdocbao.Fragment.ProfileFragment;
 import com.example.appdocbao.Fragment.UserFragment;
@@ -24,8 +23,6 @@ import com.example.appdocbao.R;
 import com.example.appdocbao.databinding.ActivityMainBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -65,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         internetBroadcastReceiver = new Internet();
 
-        //
+        // Đặt NewsFragment là fragment mặc định khi mở app
+        replaceFragement(new NewsFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -74,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragement(new NewsFragment());
             } else if (itemId == R.id.gif) {
                 // Gọi fragment đổi thưởng
+                replaceFragement(new GiftFragment());
             } else if (itemId == R.id.trend) {
                 // Gọi fragment tin tức được yêu thích
             } else if (itemId == R.id.profile) {
