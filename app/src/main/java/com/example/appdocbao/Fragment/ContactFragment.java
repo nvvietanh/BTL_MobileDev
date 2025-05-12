@@ -51,26 +51,61 @@ public class ContactFragment extends Fragment {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Tiến hành thực hiện cuộc gọi điện thoại
-                Toast.makeText(requireContext(), btn1.getText().toString(), Toast.LENGTH_SHORT).show();
-                makePhoneCall(btn1.getText().toString());
-
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    // Quyền gọi điện thoại chưa được cấp
+                    if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        // Yêu cầu quyền gọi điện thoại
+                        ActivityCompat.requestPermissions(getActivity(),
+                                new String[]{android.Manifest.permission.CALL_PHONE},
+                                CALL_PHONE_PERMISSION_REQUEST_CODE);
+                    } else {    // Quyền gọi điện thoại đã được cấp
+                        // Tiến hành thực hiện cuộc gọi điện thoại
+                        Toast.makeText(requireContext(), btn1.getText().toString(), Toast.LENGTH_SHORT).show();
+                        makePhoneCall(btn1.getText().toString());
+                    }
+                }
             }
         });
 
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(requireContext(), btn2.getText().toString(), Toast.LENGTH_SHORT).show();
-                makePhoneCall(btn2.getText().toString());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    // Quyền gọi điện thoại chưa được cấp
+                    if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        // Yêu cầu quyền gọi điện thoại
+                        ActivityCompat.requestPermissions(getActivity(),
+                                new String[]{android.Manifest.permission.CALL_PHONE},
+                                CALL_PHONE_PERMISSION_REQUEST_CODE);
+                    } else {    // Quyền gọi điện thoại đã được cấp
+                        // Tiến hành thực hiện cuộc gọi điện thoại
+                        Toast.makeText(requireContext(), btn2.getText().toString(), Toast.LENGTH_SHORT).show();
+                        makePhoneCall(btn2.getText().toString());
+                    }
+                }
             }
         });
 
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(requireContext(), btn3.getText().toString(), Toast.LENGTH_SHORT).show();
-                makePhoneCall(btn3.getText().toString());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        // Quyền gọi điện thoại chưa được cấp
+                        // Yêu cầu quyền gọi điện thoại
+                        ActivityCompat.requestPermissions(getActivity(),
+                                new String[]{android.Manifest.permission.CALL_PHONE},
+                                CALL_PHONE_PERMISSION_REQUEST_CODE);
+                    } else {
+                        // Quyền gọi điện thoại đã được cấp
+                        // Tiến hành thực hiện cuộc gọi điện thoại
+                        Toast.makeText(requireContext(), btn3.getText().toString(), Toast.LENGTH_SHORT).show();
+                        makePhoneCall(btn3.getText().toString());
+                    }
+                }
             }
         });
     }
@@ -86,4 +121,6 @@ public class ContactFragment extends Fragment {
             }
         }
     }
+
+
 }
