@@ -23,14 +23,25 @@ import com.example.appdocbao.Model.Article;
 import com.example.appdocbao.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class NewsFragment extends Fragment {
 
     LinearProgressIndicator progressIndicator;
     private RecyclerView rcvArticle;
     private RecyclerArticleAdapter articleAdapter;
+
+    private DatabaseReference databaseReference;
+    private ValueEventListener eventListener;
+
     private ArrayList<Article> listArticle;
     private DrawerLayout drawerLayout;
 
@@ -47,30 +58,8 @@ public class NewsFragment extends Fragment {
         rcvArticle = view.findViewById(R.id.recycleview_items);
         listArticle = new ArrayList<>();
 
-        // Tạo dữ liệu mẫu
-        listArticle.add(new Article(
-                "1",
-                "Tác giả A",
-                "user1",
-                1,
-                "Nội dung bài viết 1",
-                "Tiêu đề 1",
-                "https://via.placeholder.com/150",
-                System.currentTimeMillis(),
-                0
-        ));
 
-        listArticle.add(new Article(
-                "2",
-                "Tác giả B",
-                "user2",
-                2,
-                "Nội dung bài viết 2",
-                "Tiêu đề 2",
-                "https://via.placeholder.com/150",
-                System.currentTimeMillis(),
-                0
-        ));
+
 
         setupRecycleView();
         Toolbar toolbar =(Toolbar) view.findViewById(R.id.toolbar);
@@ -101,6 +90,7 @@ public class NewsFragment extends Fragment {
                 return true;
             }
         });
+        getAllArticles();
     }
     private void replaceFragement(Fragment fragment) {
         FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
@@ -114,8 +104,37 @@ public class NewsFragment extends Fragment {
         rcvArticle.setAdapter(articleAdapter);
     }
 
-    private void replaceFragment(Fragment fragment) {
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, fragment).commit();
+    private void getAllArticles() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("articles");
+        eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listArticle.clear();
+                for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
+                    Article article = itemSnapshot.getValue(Article.class);
+                    if (article != null) {
+                        listArticle.add(article);
+                    }
+                }
+                // Sắp xếp theo thời gian giảm dần nếu có timestamp
+                Collections.sort(listArticle, new Comparator<Article>() {
+                    @Override
+                    public int compare(Article a1, Article a2) {
+                        return Long.compare(a2.getTimestamp(), a1.getTimestamp());
+                    }
+                });
+                articleAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+
+        });
     }
+
+
+
 }
