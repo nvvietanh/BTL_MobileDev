@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -23,6 +24,8 @@ import com.example.appdocbao.Model.Article;
 import com.example.appdocbao.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,6 +48,10 @@ public class NewsFragment extends Fragment {
     private ArrayList<Article> listArticle;
     private DrawerLayout drawerLayout;
 
+    TabItem item0,item1,item2,item3,item4,item5,item6;
+
+    TabLayout tabLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,13 +62,50 @@ public class NewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        item0=view.findViewById(R.id.item0);
+        item1=view.findViewById(R.id.item1);
+        item2=view.findViewById(R.id.item2);
+        item3=view.findViewById(R.id.item3);
+        item4=view.findViewById(R.id.item4);
+        item5=view.findViewById(R.id.item5);
+        item6=view.findViewById(R.id.item6);
+        tabLayout = view.findViewById(R.id.tabLayout);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                // Xử lý khi một tab được chọn
+                int position = tab.getPosition();
+                filterArticles(position - 1);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // Xử lý khi một tab không còn được chọn
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // Xử lý khi một tab đã được chọn lại
+            }
+        });
+
         rcvArticle = view.findViewById(R.id.recycleview_items);
-        listArticle = new ArrayList<>();
-
-
-
-
+        progressIndicator = view.findViewById(R.id.progress_bar);
         setupRecycleView();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(false);
+//        builder.setView(R.layout.progress_layout);
+        AlertDialog dialog = builder.create();
+//        dialog.show();
+
+        listArticle = new ArrayList<>();
+        articleAdapter= new RecyclerArticleAdapter(getContext(),listArticle, 50);
+        rcvArticle.setAdapter(articleAdapter);
+
+        getAllArticles();
+
         Toolbar toolbar =(Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         drawerLayout = view.findViewById(R.id.drawerlayout);
@@ -90,7 +134,6 @@ public class NewsFragment extends Fragment {
                 return true;
             }
         });
-        getAllArticles();
     }
     private void replaceFragement(Fragment fragment) {
         FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
@@ -102,6 +145,38 @@ public class NewsFragment extends Fragment {
         rcvArticle.setHasFixedSize(true);
         articleAdapter = new RecyclerArticleAdapter(getContext(), listArticle, 30);
         rcvArticle.setAdapter(articleAdapter);
+    }
+
+    private void filterArticles(int categoryId) {
+        if(categoryId == - 1){
+            getAllArticles();
+        }else{
+            DatabaseReference articlesRef = FirebaseDatabase.getInstance().getReference("articles");
+            articlesRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    listArticle.clear();
+                    for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                        Article article = childSnapshot.getValue(Article.class);
+                        if (article != null && article.getCategoryId() == categoryId ){
+                            listArticle.add(article);
+                        }
+                    }
+                    Collections.sort(listArticle, new Comparator<Article>() {
+                        @Override
+                        public int compare(Article article1, Article article2) {
+                            // So sánh thời gian giữa hai bài báo
+                            return Long.compare(article2.getTimestamp(), article1.getTimestamp());
+                        }
+                    });
+                    articleAdapter.notifyDataSetChanged();
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Xử lý lỗi nếu có
+                }
+            });
+        }
     }
 
     private void getAllArticles() {
