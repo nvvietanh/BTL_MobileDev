@@ -35,6 +35,11 @@ public class RecyclerArticleAdapter extends RecyclerView.Adapter<RecyclerArticle
         this.amountArticleShow = amountArticleShow;
     }
 
+    public void setData(ArrayList<Article> list){
+        this.mListArticle = list;
+        notifyDataSetChanged();     // thực hiện bind load data vào adapter
+    }
+
     @NonNull
     @Override
     public ArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
