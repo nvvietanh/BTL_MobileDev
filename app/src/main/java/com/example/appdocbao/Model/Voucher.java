@@ -2,6 +2,7 @@ package com.example.appdocbao.Model;
 
 public class Voucher {
 
+    private String key;
     private String id;
     private String title;
     private String img;
@@ -17,6 +18,13 @@ public class Voucher {
         this.img = img;
         this.expiryTimestamp = expiryTimestamp;
         this.achievePoints = achievePoints;
+    }
+
+    public String getKey() {
+        return key;
+    }
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getId() {

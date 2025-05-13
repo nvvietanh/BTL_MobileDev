@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.appdocbao.Activity.MainActivity;
 
+import com.example.appdocbao.Activity.UpdateInforActivity;
+import com.example.appdocbao.Activity.VoucherChangeActivity;
 import com.example.appdocbao.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -66,7 +68,8 @@ public class UserFragment extends Fragment {
                     Toast.makeText(v.getContext(),"Tài khoản đăng nhập bằng Google không thể chỉnh sửa",Toast.LENGTH_SHORT).show();
                 }else{
                     // Gọi activity chỉnh sửa thông tin
-
+                    Intent itn = new Intent(getContext(), UpdateInforActivity.class);
+                    startActivity(itn);
                 }
             }
         });
@@ -74,7 +77,9 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // gọi activity đổi voucher và truyền context
-
+                VoucherChangeActivity voucherChangeActivity = new VoucherChangeActivity();
+                Intent it = new Intent(getContext(),voucherChangeActivity.getClass());
+                startActivity(it);
             }
         });
 
