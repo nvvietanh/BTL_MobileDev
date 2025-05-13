@@ -146,7 +146,13 @@ public class NewsFragment extends Fragment {
         articleAdapter = new RecyclerArticleAdapter(getContext(), listArticle, 30);
         rcvArticle.setAdapter(articleAdapter);
     }
-
+    void changeInProgress(boolean show){
+        if(show){
+            progressIndicator.setVisibility(View.VISIBLE);
+        }else{
+            progressIndicator.setVisibility(View.INVISIBLE);
+        }
+    }
     private void filterArticles(int categoryId) {
         if(categoryId == - 1){
             getAllArticles();
@@ -199,6 +205,7 @@ public class NewsFragment extends Fragment {
                     }
                 });
                 articleAdapter.notifyDataSetChanged();
+                changeInProgress(false);
             }
 
             @Override
