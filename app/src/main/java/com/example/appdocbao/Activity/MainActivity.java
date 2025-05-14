@@ -18,6 +18,7 @@ import com.example.appdocbao.BroadcastReceiver.Internet;
 import com.example.appdocbao.Fragment.GiftFragment;
 import com.example.appdocbao.Fragment.NewsFragment;
 import com.example.appdocbao.Fragment.ProfileFragment;
+import com.example.appdocbao.Fragment.TrendFragment;
 import com.example.appdocbao.Fragment.UserFragment;
 import com.example.appdocbao.R;
 import com.example.appdocbao.databinding.ActivityMainBinding;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragement(new GiftFragment());
             } else if (itemId == R.id.trend) {
                 // Gọi fragment tin tức được yêu thích
+                replaceFragement(new TrendFragment());
             } else if (itemId == R.id.profile) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
