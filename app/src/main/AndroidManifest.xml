@@ -29,6 +29,9 @@
             android:name=".Activity.VoucherChangeActivity"
             android:exported="false" />
         <activity
+            android:name=".Activity.ChatbotActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.UpdateInforActivity"
             android:exported="false" />
         <activity

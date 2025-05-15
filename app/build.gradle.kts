@@ -55,6 +55,7 @@ dependencies {
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 
     implementation("com.cloudinary:cloudinary-android:3.0.2")
+    implementation("com.android.volley:volley:1.2.1")
 
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 
