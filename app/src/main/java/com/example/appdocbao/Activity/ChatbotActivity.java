@@ -18,6 +18,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.appdocbao.Adapter.ChatAdapter;
 import com.example.appdocbao.Model.Message;
+import com.example.appdocbao.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;

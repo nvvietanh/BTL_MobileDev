@@ -16,6 +16,10 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.appdocbao.Activity.MainActivity;
 
+import com.example.appdocbao.Activity.ManageArticleActivity;
+import com.example.appdocbao.Activity.NewspaperPostingActivity;
+import com.example.appdocbao.Activity.RecentlyReadActivity;
+import com.example.appdocbao.Activity.SavedArticlesActivity;
 import com.example.appdocbao.Activity.UpdateInforActivity;
 import com.example.appdocbao.Activity.VoucherChangeActivity;
 import com.example.appdocbao.R;
@@ -86,7 +90,7 @@ public class UserFragment extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
         if(user!=null){
             String idUser = user.getUid();
-            Toast.makeText(getContext(), "UID: "+idUser, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "UID: "+idUser, Toast.LENGTH_SHORT).show();
             databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(idUser);
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -117,28 +121,32 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Gọi activity đăng tin tức
-
+                Intent intent = new Intent(getContext(), NewspaperPostingActivity.class);
+                startActivity(intent);
             }
         });
         manageArticle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Gọi activity quản lý tin tức
-
+                Intent intent = new Intent(getContext(), ManageArticleActivity.class);
+                startActivity(intent);
             }
         });
         tindaluu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Gọi activity tin tức đã lưu
-
+                Intent intent = new Intent(getContext(), SavedArticlesActivity.class);
+                startActivity(intent);
             }
         });
         tinganday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Gọi activity tin tức đã đọc
-
+                Intent intent = new Intent(getContext(), RecentlyReadActivity.class);
+                startActivity(intent);
             }
         });
 
